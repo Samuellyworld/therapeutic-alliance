@@ -8,10 +8,14 @@ and language patterns with spaCy, Transformers, pandas, and Matplotlib.
 
 ## See it in action
 
-![Animated monochrome terminal demo: create fictional notes, extract features, run real models, and export reports](docs/assets/terminal-demo.gif)
+![THERAPEUTIC ALLIANCE animated monochrome terminal demo: create fictional notes, extract features, run real models, and export reports](docs/assets/terminal-demo.gif)
 
 A replay of real CLI commands and output using ten fictional notes and cached
 model weights. The terminal styling is illustrative; the commands run as shown.
+
+## Example results
+
+![Real-model results for ten fictional notes: sentiment across sessions, mean emotion scores, and sentence lengths](docs/assets/demo-overview.png)
 
 ## Quick start
 
