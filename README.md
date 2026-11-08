@@ -35,7 +35,7 @@ Hugging Face cache. No account or API key is required for these public models.
 
 ## The pipeline
 
-![3D-style pipeline: validated fictional CSV to spaCy; original text to DistilBERT and DistilRoBERTa; linguistic features and model scores to CSV, charts, HTML, and a provenance manifest](docs/assets/pipeline.svg)
+![Animated black-and-white 3D-style pipeline: validated fictional CSV to spaCy; original text to DistilBERT and DistilRoBERTa; linguistic features and model scores to CSV, charts, HTML, and a provenance manifest](docs/assets/pipeline.svg)
 
 1. **Validate** the client IDs, positive session numbers, and non-empty notes.
 2. **Preprocess** with spaCy's English tokenizer and rule-based sentence splitter.
@@ -43,8 +43,10 @@ Hugging Face cache. No account or API key is required for these public models.
 4. **Join and explore** model scores and language features within each fictional client.
 5. **Export** full results, descriptive summaries, a portable report, and run metadata.
 
-The SVG is self-contained and editable. Rebuild it with
-`python scripts/render_architecture.py`; no design tool or external font is needed.
+The black-and-white SVG animates the flow along each connection and highlights
+stages in sequence. It respects reduced-motion preferences and remains readable
+without animation. Rebuild it with `python scripts/render_architecture.py`; no
+design tool or external font is needed.
 
 ## Contents
 
