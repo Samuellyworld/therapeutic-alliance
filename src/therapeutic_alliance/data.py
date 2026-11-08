@@ -22,9 +22,12 @@ def validate_notes(frame: pd.DataFrame) -> pd.DataFrame:
         result[column] = result[column].str.strip()
         if result[column].eq("").any():
             raise ValueError(f"{column} must contain non-empty text.")
+    if result["session"].map(lambda value: isinstance(value, bool)).any():
+        raise ValueError("session must be a positive integer below 2**63.")
     sessions = pd.to_numeric(result["session"], errors="coerce")
-    if (sessions.isna() | (sessions < 1) | (sessions % 1 != 0)).any():
-        raise ValueError("session must be a positive integer.")
+    invalid = sessions.isna() | (sessions < 1) | (sessions >= 2**63) | (sessions % 1 != 0)
+    if invalid.any():
+        raise ValueError("session must be a positive integer below 2**63.")
     result["session"] = sessions.astype("int64")
     if result.duplicated(["client_id", "session"]).any():
         raise ValueError("Each client_id/session pair must be unique.")
