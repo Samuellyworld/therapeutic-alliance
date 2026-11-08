@@ -45,8 +45,7 @@ Hugging Face cache. No account or API key is required for these public models.
 
 The black-and-white SVG animates the flow along each connection and highlights
 stages in sequence. It respects reduced-motion preferences and remains readable
-without animation. Rebuild it with `python scripts/render_architecture.py`; no
-design tool or external font is needed.
+without animation. The SVG is self-contained and editable.
 
 ## Contents
 
@@ -228,7 +227,6 @@ for each routine CI run. These tests verify software behavior, not clinical accu
 therapeutic-alliance/
 ├── data/synthetic_notes.csv      # ten fictional notes; two clients
 ├── docs/assets/                  # architecture SVG and actual demo chart
-├── scripts/render_architecture.py
 ├── src/therapeutic_alliance/
 │   ├── cli.py                    # sample / preprocess / analyze / demo
 │   ├── data.py                   # fictional dataset and CSV validation
