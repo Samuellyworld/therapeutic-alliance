@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "therapeutic-alliance"
+version = "0.1.0"
+description = "An educational NLP pipeline for fictional therapy progress notes"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = ["spacy>=3.7,<3.9", "pandas>=2,<3", "matplotlib>=3.8,<4"]
+
+[project.optional-dependencies]
+models = ["transformers>=4.48,<5", "torch>=2.6,<3"]
+dev = ["pytest>=8,<9", "ruff>=0.9,<1"]
+
+[project.scripts]
+therapy-notes = "therapeutic_alliance.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["integration: downloads and runs real model weights (opt-in)"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
