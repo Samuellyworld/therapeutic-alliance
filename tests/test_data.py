@@ -14,6 +14,7 @@ def test_fictional_sample_is_reproducible():
 
 @pytest.mark.parametrize("change", [
     {"session": 0}, {"session": 1.5}, {"session": float("inf")},
+    {"session": 2**63}, {"session": "1e20"}, {"session": True},
     {"note": " "}, {"note": None}, {"note": 23}, {"client_id": ""},
 ])
 def test_rejects_invalid_input(change):
