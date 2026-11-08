@@ -7,6 +7,7 @@ from therapeutic_alliance.data import synthetic_notes
 from therapeutic_alliance.models import (
     EMOTION_MODEL,
     EMOTIONS,
+    MODEL_REVISIONS,
     SENTIMENT_MODEL,
     TransformerClassifier,
 )
@@ -63,5 +64,5 @@ def test_real_models_and_long_note():
     assert result.iloc[1].sentiment_chunks > 1
     assert result.iloc[1].emotion_chunks > 1
     assert result.positive_score.between(0, 1).all()
-    assert sentiment.metadata["revision"]
-    assert emotion.metadata["revision"]
+    assert sentiment.metadata["revision"] == MODEL_REVISIONS[SENTIMENT_MODEL]
+    assert emotion.metadata["revision"] == MODEL_REVISIONS[EMOTION_MODEL]

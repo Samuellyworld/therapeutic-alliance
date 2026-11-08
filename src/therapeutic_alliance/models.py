@@ -4,11 +4,16 @@ from importlib.metadata import version
 
 SENTIMENT_MODEL = "distilbert/distilbert-base-uncased-finetuned-sst-2-english"
 EMOTION_MODEL = "j-hartmann/emotion-english-distilroberta-base"
+MODEL_REVISIONS = {
+    SENTIMENT_MODEL: "714eb0fa89d2f80546fda750413ed43d93601a13",
+    # SFconvertbot Safetensors conversion of the original emotion checkpoint.
+    EMOTION_MODEL: "7e9d7fe536a4d2bb472f9e883cc6cbbe81f68961",
+}
 EMOTIONS = ("anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise")
 
 
 class TransformerClassifier:
-    def __init__(self, model_id, revision="main", batch_size=8, local_files_only=False):
+    def __init__(self, model_id, revision=None, batch_size=8, local_files_only=False):
         if batch_size < 1:
             raise ValueError("batch_size must be positive.")
         try:
@@ -18,7 +23,11 @@ class TransformerClassifier:
             raise RuntimeError("Install model support: python -m pip install -e '.[models]'") from error
         self.torch = torch
         self.batch_size = batch_size
-        options = {"revision": revision, "local_files_only": local_files_only, "trust_remote_code": False}
+        options = {
+            "revision": revision or MODEL_REVISIONS.get(model_id, "main"),
+            "local_files_only": local_files_only,
+            "trust_remote_code": False,
+        }
         self.tokenizer = AutoTokenizer.from_pretrained(model_id, **options)
         self.model = AutoModelForSequenceClassification.from_pretrained(
             model_id, use_safetensors=True, **options
@@ -38,7 +47,8 @@ class TransformerClassifier:
     def predict(self, texts):
         results = []
         for text in texts:
-            ids = self.tokenizer(text, add_special_tokens=False, truncation=False)["input_ids"]
+            # The full token sequence is intentionally split before model inference.
+            ids = self.tokenizer(text, add_special_tokens=False, truncation=False, verbose=False)["input_ids"]
             if not ids:
                 raise ValueError("Cannot classify empty text.")
             chunks = [ids[i:i + self.chunk_size] for i in range(0, len(ids), self.chunk_size)]
